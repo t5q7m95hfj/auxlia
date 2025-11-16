@@ -948,16 +948,26 @@ footer {
   color: #333;
 }
 
-/* little pill for the “Learn more here” link */
+/* FAQ pill button - center it nicely */
 .faq-pill-link {
   display: inline-block;
-  margin-top: 0.8rem;
-  padding: 0.35rem 1rem;
+  padding: 0.6rem 1.6rem;
   border-radius: 999px;
-  border: 1px solid var(--aux-teal);
-  font-size: 0.9rem;
-  text-decoration: none;
+  border: 1.5px solid var(--aux-teal);
   color: var(--aux-teal);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+
+  /* centering hack inside left-aligned paragraphs */
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.faq-pill-link:hover {
+  background: var(--aux-teal);
+  color: #fff;
 }
 
 .faq-pill-link:hover {
