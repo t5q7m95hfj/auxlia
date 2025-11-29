@@ -11,11 +11,9 @@
    4) INDEX PAGE (hero, about, "what we offer", contact)
    5) INNER PAGES – shared background logic
    6) SERVICES PAGE (hero, tier cards, retainer card)
-   7) FAQ PAGE (hero, FAQ cards, PDF pill)
-   8) RESOURCES PAGE (cards + breathing circle)
-   9) ABOUT PAGE (cards + founder button)
-   10) FOUNDER PAGE
-   11) Global responsive tweaks
+   7) RESOURCES PAGE (cards + breathing circle)
+   8) ABOUT PAGE (cards + founder button)
+   9) Global responsive tweaks
    ========================================================= */
 
 
@@ -32,20 +30,23 @@
   box-sizing: border-box;
 }
 
-/* Root color + gradient tokens (edit here if palette changes) */
 :root {
-  --aux-teal: #00b7b3;
-  --aux-teal-light: #00d084;
-  --aux-blue: #0098ff;
-  --aux-purple: #9490ff;
-  --aux-bg-light: #eef2f3;
 
-  --aux-grad-1: rgba(0,183,179,0.90);
-  --aux-grad-2: rgba(0,196,171,0.90);
-  --aux-grad-3: rgba(0,208,132,0.90);
-  --aux-grad-4: rgba(0,181,240,0.90);
-  --aux-grad-5: rgba(0,152,255,0.90);
+  /* Core brand colors */
+  --aux-teal:        #30b9b5;   /* soft teal */
+  --aux-teal-light:  #4fc8bb;   /* light teal, not too green */
+  --aux-blue:        #25a3e2;   /* calmer ocean blue */
+  --aux-purple:      #9c95f2;   /* slightly deeper purple for the i-dot */
+  --aux-bg-light:    #eef2f3;
+
+  /* Updated gradient stops – subtle green/teal, mostly ocean blues */
+  --aux-grad-1: rgba(72, 205, 190, 0.90);   /* teal with a TINY green edge */
+  --aux-grad-2: rgba(56, 190, 178, 0.90);   /* muted teal */
+  --aux-grad-3: rgba(38, 174, 185, 0.90);   /* blue-teal */
+  --aux-grad-4: rgba(24, 164, 207, 0.90);   /* ocean blue */
+  --aux-grad-5: rgba(14, 102, 156, 0.90);   /* deep ocean blue */
 }
+
 
 
 /* =========================================================
@@ -134,7 +135,6 @@ a {
   justify-content: flex-end;
 }
 
-/* Container for wordmark + login icon on inner pages */
 .site-header-inner {
   display: flex;
   align-items: center;
@@ -142,21 +142,21 @@ a {
   gap: 1.2rem;
 }
 
-/* Small wordmark in header (services / faq / resources / about / founder) */
+/* --- Wordmark (inner pages) --- */
 .header-wordmark {
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
   text-decoration: none;
+  align-items: flex-end;
 }
 
 .header-word {
   font-family: 'Poppins', sans-serif;
   font-weight: 700;
   font-size: 1.3rem;
-  color: #fff;
+  color: #fff;               /* inner pages header sits on gradient */
   letter-spacing: 0.08em;
-  text-transform: uppercase;
+  /* DO NOT uppercase — it breaks the dotless ı */
 }
 
 .header-tagline {
@@ -164,38 +164,37 @@ a {
   font-size: 0.75rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.9);
   margin-top: 0.15rem;
-}
-
-/* Founder page wordmark (site-logo) */
-.site-logo {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  text-decoration: none;
-}
-
-.logo-word {
-  font-family: 'Poppins', sans-serif;
-  font-weight: 700;
-  font-size: 1.3rem;
-  color: #ffffff;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.logo-tagline {
-  font-family: 'Inter', sans-serif;
-  font-size: 0.75rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
   color: rgba(255,255,255,0.9);
-  margin-top: 0.15rem;
 }
 
-/* Login icon (top-right circle) */
-/* Founder page header row: logo (left) + login button (right) */
+/* =========================================================
+   Purple dot above the dotless Turkish ı in the header wordmark
+   (used on ALL inner pages)
+   ========================================================= */
+
+.header-word .idot {
+  position: relative;
+  color: #ffffff;      /* keep the ı visible */
+  display: inline-block;
+}
+
+.header-word .idot::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: -0.42em;
+  width: 0.48em;
+  height: 0.48em;
+  border-radius: 50%;
+  background: var(--aux-purple);
+  box-shadow:
+    0 2px 6px rgba(0,0,0,0.18),
+    0 0 0 1px rgba(140,120,255,0.22);
+}
+
+/* --- Login icon (optional, used on Founder page) --- */
 .header-right {
   display: flex;
   align-items: center;
@@ -212,8 +211,8 @@ a {
   border-radius: 50%;
   background: rgba(255,255,255,0.1);
   opacity: 0.55;
-  transition: opacity .25s ease, background .25s ease, transform .25s ease;
   border: none;
+  transition: opacity .25s ease, background .25s ease, transform .25s ease;
 }
 
 .login-icon:hover {
@@ -228,37 +227,35 @@ a {
   stroke: #fff;
 }
 
-/* --- Unified footer (all pages) --- */
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
 footer,
 .simple-footer,
 .secondary-footer {
-  background: #000000;
-  color: #ffffff;
+  background: #000;
+  color: #fff;
   text-align: center;
-  padding: 1.6rem 1rem;
+  padding: 1.2rem 1rem; /* slightly reduced from earlier */
   font-size: 0.9rem;
 }
 
-/* Shared nav layout */
 footer nav,
 .simple-footer nav,
 .secondary-footer-nav {
   display: flex;
-  flex-wrap: wrap;
   justify-content: center;
-  gap: 0.75rem 1.5rem;
-  margin-bottom: 0.5rem;
+  gap: 0.9rem 1.6rem;
+  margin-bottom: 0.75rem;     /* increased spacing between nav + copyright */
 }
 
-/* Footer links */
 footer a,
 .simple-footer a,
 .secondary-footer-nav .footer-link {
   color: #ffffff;
   text-decoration: none;
-  opacity: 1;
-  margin: 0;
-  font-size: 0.9rem;
+  opacity: 0.95;
 }
 
 footer a:hover,
@@ -267,21 +264,11 @@ footer a:hover,
   opacity: 1;
 }
 
-/* Copyright subtler spacing */
 .secondary-footer-copy {
   margin-top: 0.5rem;
 }
 
-/* Footer on very small screens */
-@media (max-width: 480px) {
-  footer,
-  .simple-footer,
-  .secondary-footer {
-    font-size: 0.85rem;
-  }
-}
-
-/* --- Shared pill-style button (used for PDF + some CTAs) --- */
+/* --- Pill buttons (PDF, small CTAs) --- */
 .faq-pill-link {
   display: inline-block;
   padding: 0.6rem 1.6rem;
@@ -291,24 +278,22 @@ footer a:hover,
   font-weight: 600;
   font-size: 0.9rem;
   text-decoration: none;
-  border: none;
   transition: all 0.25s ease;
   margin: 0.4rem auto 0;
 }
 
 .faq-pill-link:hover {
-  background: #ffffff;
+  background: #fff;
   color: var(--aux-teal);
   box-shadow: 0 6px 16px rgba(0,0,0,0.12);
 }
 
-/* Shared small-pill pattern used on several pages */
 .about-pill {
   display: inline-block;
   padding: 0.55rem 1.4rem;
+  border-radius: 40px;
   background: var(--aux-teal);
   color: #fff;
-  border-radius: 40px;
   font-weight: 600;
   font-size: 0.9rem;
   text-decoration: none;
@@ -320,7 +305,6 @@ footer a:hover,
   color: var(--aux-teal);
   box-shadow: 0 4px 12px rgba(0,0,0,0.12);
 }
-
 
 /* =========================================================
    4) INDEX PAGE (HOME)
@@ -338,11 +322,11 @@ footer a:hover,
   height: 100vh;
   background: linear-gradient(
     135deg,
-    #00b7b3 0%,
-    #00c4ab 24%,
-    #00d084 52%,
-    #00b5f0 78%,
-    #0098ff 100%
+    var(--aux-grad-1) 0%,
+    var(--aux-grad-2) 24%,
+    var(--aux-grad-3) 52%,
+    var(--aux-grad-4) 78%,
+    var(--aux-grad-5) 100%
   );
   color: #fff;
   display: flex;
@@ -424,12 +408,15 @@ footer a:hover,
   align-items: center;
   justify-content: space-around;
   gap: 3rem;
-  padding: 6rem 10%;
+  /* slightly less vertical padding to shorten the grey band */
+  padding: 4.5rem 10% 3.5rem;
   background: var(--aux-bg-light);
 }
 
+/* keep the text column a bit narrower so it doesn’t feel so “long” */
 .about .text {
   width: 50%;
+  max-width: 34rem;
 }
 
 .about h2 {
@@ -467,9 +454,9 @@ footer a:hover,
   border-radius: 50%;
   background: linear-gradient(
     135deg,
-    var(--aux-grad-1) 8%,
-    var(--aux-grad-2) 52%,
-    var(--aux-grad-3) 100%
+    var(--aux-grad-3) 15%,
+    var(--aux-grad-4) 45%,
+    var(--aux-grad-5) 100%
   );
   background-size: 180% 180%;
   box-shadow:
@@ -481,8 +468,16 @@ footer a:hover,
 
 /* Subtle spin on hover */
 .about-art:hover .mark {
-  animation: tiltSpin 12s linear infinite;
-  filter: brightness(1.06) saturate(1.06);
+  animation: tiltSpin 22s linear infinite;
+  filter: brightness(1.04) saturate(1.03);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-art:hover .mark {
+    animation: none;
+    transform: none;
+    filter: brightness(1.02) saturate(1.02);
+  }
 }
 
 @keyframes tiltSpin {
@@ -514,14 +509,14 @@ footer a:hover,
   width: 22%;
   left: 17%;
   transform: rotate(-31deg);
-  background: linear-gradient(180deg, rgba(148,144,255,0.62), transparent);
+  background: linear-gradient(180deg, #9c95f2, transparent);
 }
 
 .band-b {
   width: 16%;
   left: 28%;
   transform: rotate(-22deg);
-  background: linear-gradient(180deg, rgba(148,144,255,0.45), transparent);
+  background: linear-gradient(180deg, rgba(95,212,209,0.35), transparent);
 }
 
 /* Wordmark inside globe */
@@ -544,7 +539,7 @@ footer a:hover,
 
 /* Purple dot gently moves on globe */
 .about-art .mark-word .idot::after {
-  top: -0.25em;
+  top: -0.35em;
   animation: idotBreathGlobe 5.2s ease-in-out infinite;
 }
 
@@ -563,37 +558,82 @@ footer a:hover,
   white-space: nowrap;
 }
 
-/* --- "What we offer" preview section on index --- */
-.services {
-  padding: 6rem 10%;
+/* People turn to Auxlia section */
+.situations {
+  background: #ffffff;
+  padding: 3rem 10% 1.4rem;
+}
+
+.situations-inner {
+  max-width: 760px;
+  margin: 0 auto;
   text-align: center;
-  background: #fff;
+}
+
+.situations h2 {
+  font-family: 'Poppins', sans-serif;
+  color: var(--aux-teal);
+  font-size: 1.7rem;
+  margin-bottom: 1.1rem;
+}
+
+.situations ul {
+  list-style: disc;
+  margin: 0 auto;
+  padding-left: 1.4rem;
+  line-height: 1.7;
+  color: #444;
+  font-size: 0.98rem;
+  text-align: left;
+  max-width: 520px;
+}
+
+/* Soft gradient divider */
+.soft-divider {
+  border: none;
+  height: 3px;
+  width: 48%;
+  margin: 2.2rem auto 2.4rem;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    var(--aux-teal),
+    var(--aux-teal)
+  );
+  box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+}
+
+/* What we offer section */
+.services {
+  background: #ffffff;
+  padding: 2.2rem 10% 4rem;
+  text-align: center;
 }
 
 .services h2 {
   color: var(--aux-teal);
   font-size: 2rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0.4rem;
   font-family: 'Poppins', sans-serif;
 }
 
 .services > p {
-  margin-bottom: 2.2rem;
+  margin-bottom: 1.8rem;
   font-size: 0.98rem;
   color: #555;
 }
 
-/* Three small cards on home */
+/* Cards */
 .cards {
   display: flex;
-  gap: 2rem;
+  flex-wrap: nowrap;          /* prevent vertical stacking */
   justify-content: center;
-  flex-wrap: wrap;
+  gap: 2rem;
   margin-bottom: 2.5rem;
 }
 
 .card {
-  background: var(--aux-bg-light);
+  background: #e3ecef;   /* the original calm grey */;;               /* <— override if it was var(--aux-bg-light) */
   padding: 2rem;
   border-radius: 12px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.05);
@@ -631,20 +671,16 @@ footer a:hover,
   box-shadow: 0 6px 18px rgba(0,0,0,0.10);
 }
 
-/* Row of small pills under "What we offer" on index */
-.about-buttons {
-  margin-top: 1.8rem;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 0.85rem;
-}
-
 /* --- Contact block on index --- */
 .contact {
   text-align: center;
   padding: 5rem 10%;
-  background: linear-gradient(135deg, #00b7b3, #00d084, #0098ff);
+  background: linear-gradient(
+    135deg,
+    var(--aux-grad-1),
+    var(--aux-grad-3),
+    var(--aux-grad-5)
+  );
   color: #fff;
 }
 
@@ -673,17 +709,86 @@ footer a:hover,
   color: #fff;
 }
 
+/* --- Keeps cards in a row --- */
+@media (min-width: 900px) {
+  .cards,
+  .process-steps,
+  .resource-cards {
+    flex-wrap: nowrap;
+  }
+
+  .card,
+  .process-step,
+  .resource-card {
+    max-width: 260px;
+    width: 100%;
+  }
+}
+
+
+/* --- Footer (dot-separated links) --- */
+.simple-footer {
+  padding: 1.6rem 10% 1.8rem; 
+  background: #000;
+  text-align: center;
+  font-family: 'Poppins', sans-serif;
+  color: rgba(255,255,255,0.9);
+  font-size: 1.05rem;
+}
+
+.simple-footer .footer-links {
+  margin-bottom: 3rem !important; /* forced, large gap before copyright */
+  letter-spacing: 0.02em;
+}
+
+.simple-footer .footer-copy {
+  margin-top: 1.4rem !important; /* extra fallback spacing */
+  opacity: 0.8;
+}
+
+/* COPYRIGHT */
+.simple-footer .footer-copy {
+  margin: 0;
+  opacity: 0.75;
+  font-size: 0.95rem;
+}
+
 
 /* =========================================================
    5) INNER PAGES – SHARED BACKGROUND LOGIC
    (services, faq, resources, about, founder)
    ========================================================= */
 
-.services-page,
+/* Inner pages: header sits directly on the gradient, no white bar */
+.services-page .site-header,
+.about-page .site-header,
+.resources-page .site-header,
+.founder-page .site-header {
+  background: transparent;
+  border-bottom: none;
+}
+
+/* ============================================
+   Gradient logo for inner pages
+=============================================== */
+.gradient-logo img {
+  height: 48px;
+  width: auto;
+  display: block;
+}
+
+.services-page .header-wordmark.gradient-logo,
+.about-page .header-wordmark.gradient-logo,
+.resources-page .header-wordmark.gradient-logo,
+.founder-page .header-wordmark.gradient-logo,
+.faq-page .header-wordmark.gradient-logo {
+  display: flex;
+  align-items: center;
+}
+
 .faq-page,
 .resources-page,
-.about-page,
-.founder-page {
+.about-page {
   position: relative;
   min-height: 100vh;
   background: linear-gradient(
@@ -695,6 +800,41 @@ footer a:hover,
     var(--aux-grad-5) 100%
   );
 }
+
+.header-word .idot,
+.mark-word .idot {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+}
+
+/* ============================================
+   Gradient text wordmark for inner pages
+=============================================== */
+
+.services-page .gradient-text-logo .header-word,
+.about-page .gradient-text-logo .header-word,
+.resources-page .gradient-text-logo .header-word,
+.founder-page .gradient-text-logo .header-word,
+.faq-page .gradient-text-logo .header-word {
+  background: linear-gradient(
+    135deg,
+    var(--aux-grad-1) 0%,
+    var(--aux-grad-2) 30%,
+    var(--aux-grad-3) 55%,
+    var(--aux-grad-4) 80%,
+    var(--aux-grad-5) 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Tagline stays simple + readable */
+.gradient-text-logo .header-tagline {
+  color: rgba(255,255,255,0.85);
+}
+
 
 /* White veil overlay for subtle softness */
 .services-page::before,
@@ -725,19 +865,37 @@ footer a:hover,
 .resources-page::before,
 .about-page::before,
 .founder-page::before {
-  bottom: 120px;
+  bottom: 150px;
 }
+
+/* Make sure the Turkish ı stays visible inside the gradient header */
+.gradient-text-logo .header-word .idot {
+  -webkit-text-fill-color: #ffffff !important; /* show the glyph */
+  color: #ffffff;
+}
+
 
 
 /* =========================================================
    6) SERVICES PAGE
    ========================================================= */
 
-/* HERO */
+/* HERO – mirror home hero: gradient background, centered white text */
+/* HERO – same gradient as home, slightly tighter */
 .services-hero {
+  background: linear-gradient(
+    135deg,
+    var(--aux-grad-1) 0%,
+    var(--aux-grad-2) 24%,
+    var(--aux-grad-3) 52%,
+    var(--aux-grad-4) 78%,
+    var(--aux-grad-5) 100%
+  );
+  color: #ffffff;
   text-align: center;
-  padding: 7.5rem 10% 3rem;
+  padding: 5rem 10% 3.2rem;  /* tighter top + bottom */
 }
+
 
 .services-hero h1 {
   font-family: 'Poppins', sans-serif;
@@ -747,32 +905,57 @@ footer a:hover,
 }
 
 .services-intro-bottom {
-  color: rgba(255,255,255,0.95);
+  color: rgba(255, 255, 255, 0.95) !important;
   font-size: 1rem;
+  max-width: 36rem;
+  margin: 0 auto;
+  line-height: 1.6;
 }
 
-/* Tier cards layout */
+/* ===============================
+   PERFECT PURPLE DOT (header)
+   =============================== */
+.header-word .idot::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-63%);  /* slight left correction (~1px) */
+  top: -0.44em;                 /* tiny downward nudge */
+  width: 0.42em;                /* made slightly smaller so it looks rounder */
+  height: 0.42em;
+  border-radius: 50%;           /* ensures perfect circle */
+  background: var(--aux-purple);
+  box-shadow:
+    0 2px 4px rgba(0,0,0,0.18),
+    0 0 0 1px rgba(140,120,255,0.18);
+}
+
+
+/* Tier cards section – soft grey background */
 .services-tiers {
-  padding: 0 10% 3rem;
+  background: var(--aux-bg-light);
+  padding: 3rem 10% 3.5rem;
   display: flex;
   justify-content: center;
-  align-items: stretch;       /* cards same height row */
+  align-items: stretch;
   gap: 2rem;
   flex-wrap: wrap;
 }
 
-/* Individual tier card */
+/* Individual tier card – white on grey section */
 .service-card {
-  background: var(--aux-bg-light);
+  background: #ffffff;
   padding: 1.8rem 1.6rem;
   border-radius: 14px;
-  width: 240px;               /* slightly smaller width */
+  width: 245px;
   text-align: center;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  border: 1px solid rgba(255,255,255,0.9);
   transition: transform .3s ease, box-shadow .3s ease;
   display: flex;
-  flex-direction: column;     /* vertical stack for alignment */
+  flex-direction: column;
 }
+
 
 .service-card:hover {
   transform: translateY(-6px);
@@ -791,41 +974,111 @@ footer a:hover,
   color: #333;
   font-size: 0.95rem;
   margin-bottom: 0.9rem;
-  min-height: 3.0em;          /* encourages similar visual height */
+  min-height: 3.0em;
 }
 
 /* Price line – pushed toward the lower third of card */
 .tier-price {
-  margin-top: auto;           /* pushes this downward consistently */
+  margin-top: auto;
   font-weight: 600;
   color: var(--aux-teal);
   margin-bottom: 0.35rem;
 }
 
-/* Short line under price (e.g. "≈ 2 hours...") */
+.tier-approx {
+  font-weight: 400;
+  color: #777;
+}
+
+/* Short line under price */
 .tier-note {
   margin-top: 0;
   font-size: 0.9rem;
   color: #555;
 }
 
-/* RETAINER CARD */
+.services-help,
 .retainer-section {
-  padding: 0 10% 4rem;
+  background: #ffffff;
+}
+
+.services-help-card,
+.retainer-card {
+  background: var(--aux-bg-light);  /* both white */
+  border-radius: 16px;
+  max-width: 840px;     /* visually matches 3×245 row above */
+  width: 100%;
+  margin: 0 auto;
+  box-shadow: 0 8px 18px rgba(0,0,0,0.06);
+  border: 1px solid rgba(255,255,255,0.9);
+  padding: 1.6rem 2rem 1.8rem;
+  text-align: center;
+}
+
+
+
+/* "What we can help with" card under tiers */
+.services-help {
+  background: #ffffff;
+  padding: 3rem 10% 4rem;
   display: flex;
   justify-content: center;
 }
 
-.retainer-card {
-  background: #ffffff;
-  padding: 1.8rem 2.4rem 2.2rem;
-  border-radius: 16px;
+
+
+/* Center only the title */
+.services-help-card h2 {
   text-align: center;
-  width: min(720px, 100%);    /* longer/wider card on desktop */
-  box-shadow: 0 4px 14px rgba(0,0,0,0.06);
-  transition: transform .3s ease, box-shadow .3s ease;
-  margin-top: 0.5rem;
-  border: 1px solid rgba(255,255,255,0.7);
+}
+
+/* Center the subtitle paragraph */
+.services-help-card p {
+  text-align: center;
+}
+
+/* Left-align only the bullet list */
+.services-help-card ul {
+  text-align: left;
+  margin: 0 auto;
+  display: inline-block;
+  padding-left: 1.2rem;
+}
+/* Keep the *block* centered nicely */
+.services-help-card ul {
+  margin: 0 auto;
+  display: inline-block;
+  padding-left: 1.2rem;
+}
+
+.services-help-card h2 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.4rem;
+  color: var(--aux-teal);
+  margin-bottom: 0.8rem;
+  white-space: nowrap;
+}
+
+.services-help-card p {
+  font-size: 0.96rem;
+  line-height: 1.6;
+  color: #333;
+  margin-bottom: 0.8rem;
+}
+
+.services-help-card ul {
+  padding-left: 1.2rem;
+}
+
+.services-help-card li {
+  margin-bottom: 0.35rem;
+}
+
+/* RETAINER CARD */
+.retainer-section {
+  padding: 0 10% 4.5rem;
+  display: flex;
+  justify-content: center;
 }
 
 .retainer-card:hover {
@@ -852,149 +1105,81 @@ footer a:hover,
   text-align: center;
 }
 
-/* "What we can help with" card under tiers */
-.services-help {
-  padding: 0 10% 4rem;
-  display: flex;
-  justify-content: center;
-}
-
-.services-help-card {
-  background: #ffffff;
-  border-radius: 16px;
-  padding: 2rem 2.2rem 2.3rem;
-  max-width: 720px;
-  width: 100%;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-}
-
-.services-help-card h2 {
-  font-family: 'Poppins', sans-serif;
-  font-size: 1.4rem;
-  color: var(--aux-teal);
-  margin-bottom: 0.8rem;
-}
-
-.services-help-card p {
-  font-size: 0.96rem;
-  line-height: 1.6;
-  color: #333;
-  margin-bottom: 0.8rem;
-}
-
-.services-help-card ul {
-  padding-left: 1.2rem;
-}
-
-.services-help-card li {
-  margin-bottom: 0.35rem;
-}
-
-/* Keep "What we can help with" on one line */
-.services-help-card h2 {
-  white-space: nowrap;
-}
-
-/* Prevent overflow on small screens */
-@media (max-width: 480px) {
-  .services-help-card h2 {
-    font-size: 1.25rem;
-    letter-spacing: 0.01em;
-  }
-}
-
-/* Small explanatory footnote under button */
 .retainer-footnote {
   margin-top: 0.75rem;
   font-size: 0.82rem;
   color: #555;
 }
 
+/* Small screen tweaks */
+@media (max-width: 768px) {
+  .services-hero {
+    padding: 3.5rem 8% 2.5rem;
+  }
+
+  .services-tiers {
+    padding: 2rem 8% 3rem;
+  }
+}
 
 
+/* ============================================
+   UNIVERSAL CARD HOVER for Services page
+   Applies to: tier cards, help card, retainer card
+=============================================== */
+
+.service-card,
+.services-help-card,
+.retainer-card {
+  transition: transform .3s ease, box-shadow .3s ease;
+}
+
+.service-card:hover,
+.services-help-card:hover,
+.retainer-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+}
 
 /* =========================================================
-   7) FAQ PAGE
+   7) RESOURCES PAGE
    ========================================================= */
 
-.faq-hero {
-  text-align: center;
-  padding: 7.5rem 10% 3rem;
-}
-
-.faq-title {
-  font-family: 'Poppins', sans-serif;
-  font-size: 2.4rem;
-  color: #ffffff;
-  margin-bottom: 1rem;
-}
-
-.faq-subtitle {
-  font-size: 1.05rem;
-  color: rgba(255,255,255,0.95);
-}
-
-.faq-content {
-  padding: 2rem 10% 4rem;
-  max-width: 860px;
-  margin: 0 auto;
-}
-
-/* Each FAQ entry card */
-.faq-item {
-  margin-bottom: 1.6rem;
-  background: rgba(255,255,255,0.96);
-  border-radius: 14px;
-  padding: 1.4rem 1.6rem;
-  box-shadow: 0 6px 16px rgba(0,0,0,0.08);
-}
-
-.faq-item h3 {
-  font-family: 'Poppins', sans-serif;
-  color: var(--aux-teal);
-  margin-bottom: 0.4rem;
-}
-
-.faq-item p {
-  line-height: 1.55;
-  color: #333;
-}
-
-/* Center the "Learn more" pill in FAQs */
-.faq-item .faq-pill-link {
-  margin-top: 0.9rem;
-}
-
-
-/* =========================================================
-   8) RESOURCES PAGE
-   ========================================================= */
-
+/* Hero – mirror services/about hero */
 .resources-hero {
-  padding: 7.5rem 10% 2rem;
-  text-align: center;
+  background: linear-gradient(
+    135deg,
+    var(--aux-grad-1) 0%,
+    var(--aux-grad-2) 24%,
+    var(--aux-grad-3) 52%,
+    var(--aux-grad-4) 78%,
+    var(--aux-grad-5) 100%
+  );
   color: #ffffff;
-  max-width: 900px;
+  text-align: center;
+  padding: 5rem 10% 3.2rem;
+  max-width: 100%;
   margin: 0 auto;
 }
 
 .resources-hero h1 {
   font-family: 'Poppins', sans-serif;
   font-size: 2.4rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0.8rem;
 }
 
 .resources-hero p {
   font-size: 1rem;
   line-height: 1.6;
-  max-width: 620px;
-  margin: 0.8rem auto 0;
+  max-width: 36rem;
+  margin: 0 auto;
+  color: rgba(255,255,255,0.95);
 }
 
 /* Main card stack */
 .resources-main {
   padding: 2rem 10% 4.5rem;
-  max-width: 900px;
+  max-width: 1100px;   /* was 900px */
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -1007,6 +1192,13 @@ footer a:hover,
   width: 100%;
   padding: 2rem 2rem 2.2rem;
   box-shadow: 0 10px 24px rgba(0,0,0,0.08);
+  border: 1px solid rgba(255,255,255,0.9);
+  transition: transform .3s ease, box-shadow .3s ease;
+}
+
+.resources-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.12);
 }
 
 .resources-card h2 {
@@ -1112,41 +1304,87 @@ footer a:hover,
   margin-bottom: 0.3rem;
 }
 
+/* Resources page: calm light-grey background, no gradient veil */
+.resources-page {
+  background: var(--aux-bg-light);
+}
+
+.resources-page::before {
+  content: none;
+}
+
+@media (max-width: 768px) {
+  .resources-hero {
+    padding: 4.6rem 8% 2rem;
+  }
+}
+
+
 
 /* =========================================================
-   9) ABOUT PAGE
+   8) ABOUT PAGE
    ========================================================= */
 
+/* Hero – visually matches services hero */
 .about-hero {
-  padding: 6rem 10% 2rem;
-  text-align: center;
+  background: linear-gradient(
+    135deg,
+    var(--aux-grad-1) 0%,
+    var(--aux-grad-2) 24%,
+    var(--aux-grad-3) 52%,
+    var(--aux-grad-4) 78%,
+    var(--aux-grad-5) 100%
+  );
   color: #ffffff;
-  max-width: 900px;
-  margin: 0 auto;
+  text-align: center;
+  padding: 5rem 10% 3.2rem;
 }
 
 .about-hero h1 {
   font-family: 'Poppins', sans-serif;
   font-size: 2.4rem;
-  margin-bottom: 1rem;
+  color: #ffffff;
+  margin-bottom: 0.8rem;
 }
 
-.about-hero p {
+/* Intro line – same styling as services-intro-bottom */
+.about-intro-bottom {
+  color: rgba(255, 255, 255, 0.95);
   font-size: 1rem;
-  line-height: 1.6;
-  max-width: 680px;
+  max-width: 36rem;
   margin: 0 auto;
+  line-height: 1.6;
 }
 
-/* Card grid instead of one long block */
 .about-main {
   padding: 2rem 10% 4.5rem;
   max-width: 1100px;
   margin: 0 auto;
   display: grid;
   gap: 1.5rem;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
 }
+
+/* Desktop / tablet: 2 columns, but only for the first two cards */
+@media (min-width: 768px) {
+  .about-main {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  /* From the third card onward, span full width */
+  .about-main .about-card:nth-child(n + 3) {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (min-width: 768px) {
+  /* From the third card onward: full-width in the grid,
+     but visually narrower + centered */
+  .about-main .about-card:nth-child(n + 3) {
+    max-width: 820px;      /* adjust to taste: 760–840 looks good */
+    justify-self: center;  /* centers within the grid */
+  }
+}
+
 
 .about-card {
   background: #ffffff;
@@ -1155,10 +1393,6 @@ footer a:hover,
   box-shadow: 0 10px 24px rgba(0,0,0,0.08);
 }
 
-/* Make the final "Who is behind Auxlia?" card span full width */
-.about-main .about-card:last-child {
-  grid-column: 1 / -1;
-}
 
 .about-card h2 {
   font-family: 'Poppins', sans-serif;
@@ -1180,84 +1414,241 @@ footer a:hover,
   justify-content: flex-start;
 }
 
-
-/* =========================================================
-   10) FOUNDER PAGE
-   ========================================================= */
-
-.founder-main {
-  padding: 6rem 10% 4rem;
-  max-width: 900px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  gap: 1.4rem;
+/* Override for About page: light grey background like services sections */
+.about-page {
+  background: var(--aux-bg-light);
 }
 
-.founder-card {
-  width: 100%;
+/* About page: no white veil, just clean grey background */
+.about-page::before {
+  content: none;
+}
+
+.about-card {
   background: #ffffff;
-  border-radius: 16px;
-  padding: 2rem 2.1rem 2.2rem;
-  box-shadow: 0 10px 24px rgba(0,0,0,0.10);
+  border-radius: 14px;
+  padding: 1.8rem 1.8rem 2rem;
+  box-shadow: 0 10px 24px rgba(0,0,0,0.08);
 }
 
-/* Main page title only in the first card */
-.founder-card h1 {
-  font-family: 'Poppins', sans-serif;
-  font-size: 2.1rem;
-  color: var(--aux-teal);
-  margin-bottom: 0.75rem;
+.about-card {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 1.8rem 1.8rem 2rem;
+  box-shadow: 0 8px 18px rgba(0,0,0,0.08);
+  border: 1px solid rgba(255,255,255,0.9);
+  transition: transform .3s ease, box-shadow .3s ease;
 }
 
-/* Section headings in blue instead of purple */
-.founder-card h2 {
-  font-family: 'Poppins', sans-serif;
-  font-size: 1.25rem;
-  color: var(--aux-blue);
+.about-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+}
+
+
+/* Who Auxlia helps list – slightly looser and aligned */
+.about-list {
+  padding-left: 1.2rem;
+  margin: 0.4rem 0 0.8rem;
+}
+
+.about-list li {
+  margin-bottom: 0.3rem;
+}
+
+/* How Auxlia works – nicer list layout */
+.about-steps {
+  list-style-position: outside;
+  padding-left: 1.4rem;
   margin-top: 0.4rem;
-  margin-bottom: 0.45rem;
 }
 
-.founder-card p {
-  line-height: 1.7;
-  color: #333;
-  font-size: 0.98rem;
+.about-steps li {
   margin-bottom: 0.85rem;
 }
 
-/* Founder CTA at bottom of last card */
-.founder-cta {
+/* Step headings inline with the number */
+.about-steps h3 {
+  display: inline;
+  font-size: 1rem;
+  font-family: 'Poppins', sans-serif;
+  margin-right: 0.3rem;
+}
+
+/* Step text sits on same line then wraps nicely */
+.about-steps p {
+  display: inline;
+}
+
+.mini-faq-q {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--aux-teal);
+  margin-top: 1.2rem;
+  margin-bottom: 0.3rem;
+}
+
+.about-card .mini-faq-q + p {
+  margin-top: 0.2rem;   /* small, neat gap */
+  margin-bottom: 0.8rem;
+  line-height: 1.6;
+  color: #333;
+}
+
+.about-card.short-answers {
+  padding-bottom: 2.2rem;
+}
+
+.short-answers .mini-faq-q {
   margin-top: 1.4rem;
+}
+
+.short-answers p {
+  margin-bottom: 1rem;
+}
+
+/* Who Auxlia helps – give text more air */
+.about-main .about-card:nth-child(3) p,
+.about-main .about-card:nth-child(3) li {
+  font-size: 0.98rem;
+  line-height: 1.7;
+}
+
+/* List spacing inside this card */
+.about-list {
+  padding-left: 1.2rem;
+  margin: 0.5rem 0 1rem;
+}
+
+.about-list li {
+  margin-bottom: 0.35rem;
+}
+
+.about-list .accent {
+  color: var(--aux-teal);
+  font-weight: 600;        /* optional — looks very clean */
+}
+
+.about-card p {
+  line-height: 1.58;  /* slightly tighter than 1.65 */
+  margin-bottom: 0.75rem;
+}
+
+.about-main .about-card:nth-child(1),
+.about-main .about-card:nth-child(2) {
+  max-width: 460px;     /* optional: keeps them visually tidy */
+}
+
+/* Narrow just the first two cards on desktop */
+@media (min-width: 768px) {
+  .about-main .about-card:nth-child(1),
+  .about-main .about-card:nth-child(2) {
+    max-width: 460px;
+    justify-self: center;
+  }
+}
+
+.about-main .about-card:nth-child(1) p,
+.about-main .about-card:nth-child(2) p {
+  line-height: 1.56;
+}
+
+.about-main .about-card:nth-child(1),
+.about-main .about-card:nth-child(2) {
+  padding-bottom: 2.2rem;
+}
+
+@media (min-width: 768px) {
+  /* Make the first two cards a bit narrower so they don't dominate */
+  .about-main .about-card:nth-child(1),
+  .about-main .about-card:nth-child(2) {
+    max-width: 390px;      /* tweak 420–460 to taste */
+    justify-self: center;  /* keeps each card centered in its column */
+  }
+}
+
+/* Number + step title in teal */
+.about-steps {
+  padding-left: 1.4rem;
+}
+
+.about-steps li::marker {
+  color: var(--aux-teal);
+  font-weight: 600;
+}
+
+.about-steps h3 {
+  display: inline;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--aux-teal);
+  margin-right: 0.25rem;
+}
+
+/* Step text inline and neutral */
+.about-steps p {
+  display: inline;
+  color: #333;
+}
+
+/* Center pill-style buttons that appear in About cards */
+.about-card .faq-pill-link {
+  display: block;
+  margin: 0.9rem auto 0;   /* centered horizontally */
   text-align: center;
 }
 
-.founder-cta-text {
-  font-size: 0.95rem;
-  color: #555;
-  margin-bottom: 0.9rem;
+.about-steps li {
+  margin-bottom: 0.85rem;
 }
 
-.founder-cta-button {
-  display: inline-block;
-  padding: 0.7rem 1.8rem;
-  background: var(--aux-teal);
-  color: #fff;
-  font-weight: 600;
-  border-radius: 40px;
-  text-decoration: none;
-  transition: all 0.25s ease;
-}
-
-.founder-cta-button:hover {
-  background: #fff;
+.about-steps li::marker {
   color: var(--aux-teal);
-  box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+  font-weight: 600;
 }
 
+.about-steps h3 {
+  display: inline;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--aux-teal);
+  margin-right: 0.25rem;
+}
+
+.about-steps p {
+  display: inline;
+  color: #333;
+}
+
+/* In Values & Boundaries card: center the pill and size it to content */
+.about-card .faq-pill-link {
+  display: block;
+  width: max-content;      /* shrink to content width */
+  margin: 1rem auto 0;     /* center horizontally */
+  padding: 0.6rem 1.6rem;  /* keep it pill-y but not huge */
+}
+
+.about-card h2 {
+  margin-bottom: 0.6rem;   /* existing, applies to all cards */
+}
+
+/* Add this: increase spacing ONLY for the How Auxlia works card */
+.about-card:nth-child(4) h2 {
+  margin-bottom: 1.2rem;   /* adjust 1.0–1.4 to taste */
+}
+
+/* First two cards: What Auxlia is + What Auxlia is not */
+.about-main .about-card:nth-child(1),
+.about-main .about-card:nth-child(2) {
+  padding-top: 1.4rem;
+  padding-bottom: 1.2rem;
+}
 
 /* =========================================================
-   11) GLOBAL RESPONSIVE TWEAKS
+   9) GLOBAL RESPONSIVE TWEAKS
    ========================================================= */
 
 /* Hero title scaling */
