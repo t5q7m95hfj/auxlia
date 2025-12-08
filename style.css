@@ -1,18 +1,15 @@
 /* =========================================================
    AUXLIA GLOBAL STYLESHEET
    ---------------------------------------------------------
-   This file is structured in clear sections so you can
-   find things easily later.
-
-   SECTIONS
+   Structure:
    1) Imports + Reset + Root variables
-   2) Base typography / layout
+   2) Base typography & layout
    3) Shared elements (i-dot, header, footer, buttons)
-   4) INDEX PAGE (hero, about, "what we offer", contact)
-   5) INNER PAGES – shared background logic
-   6) SERVICES PAGE (hero, tier cards, retainer card)
-   7) RESOURCES PAGE (cards + breathing circle)
-   8) ABOUT PAGE (cards + founder button)
+   4) Home (index)
+   5) Inner pages shell (about, services, resources)
+   6) Services page
+   7) Resources page
+   8) About page
    9) Global responsive tweaks
    ========================================================= */
 
@@ -24,30 +21,29 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Poppins:wght@500;700&display=swap');
 
 /* Basic reset */
-* {
+*,
+*::before,
+*::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
 :root {
-
   /* Core brand colors */
-  --aux-teal:        #30b9b5;   /* soft teal */
-  --aux-teal-light:  #4fc8bb;   /* light teal, not too green */
-  --aux-blue:        #25a3e2;   /* calmer ocean blue */
-  --aux-purple:      #9c95f2;   /* slightly deeper purple for the i-dot */
-  --aux-bg-light:    #eef2f3;
+  --aux-teal:       #30b9b5;   /* soft teal */
+  --aux-teal-light: #4fc8bb;   /* light teal, not too green */
+  --aux-blue:       #25a3e2;   /* calmer ocean blue */
+  --aux-purple:     #9c95f2;   /* slightly deeper purple for the i-dot */
+  --aux-bg-light:   #eef2f3;
 
-  /* Updated gradient stops – subtle green/teal, mostly ocean blues */
-  --aux-grad-1: rgba(72, 205, 190, 0.90);   /* teal with a TINY green edge */
-  --aux-grad-2: rgba(56, 190, 178, 0.90);   /* muted teal */
-  --aux-grad-3: rgba(38, 174, 185, 0.90);   /* blue-teal */
-  --aux-grad-4: rgba(24, 164, 207, 0.90);   /* ocean blue */
-  --aux-grad-5: rgba(14, 102, 156, 0.90);   /* deep ocean blue */
+  /* Gradient stops – subtle green/teal, mostly ocean blues */
+  --aux-grad-1: rgba(72, 205, 190, 0.90);  /* teal with a tiny green edge */
+  --aux-grad-2: rgba(56, 190, 178, 0.90);  /* muted teal */
+  --aux-grad-3: rgba(38, 174, 185, 0.90);  /* blue-teal */
+  --aux-grad-4: rgba(24, 164, 207, 0.90);  /* ocean blue */
+  --aux-grad-5: rgba(14, 102, 156, 0.90);  /* deep ocean blue */
 }
-
-
 
 /* =========================================================
    2) BASE TYPOGRAPHY / LAYOUT
@@ -63,24 +59,23 @@ body {
   background: #fff;
 }
 
-/* "Soft" paragraph default */
+/* Soft paragraph default */
 p {
   font-size: 0.98rem;
   line-height: 1.6;
   color: #333;
 }
 
-/* Generic link base (pages override when needed) */
+/* Generic link base */
 a {
   color: inherit;
   text-decoration: none;
 }
 
-/* Ensure text on gradient sections uses white */
+/* Default text color on gradient sections */
 .hero,
 .contact,
 .services-hero,
-.faq-hero,
 .resources-hero,
 .about-hero {
   color: #ffffff;
@@ -89,20 +84,19 @@ a {
 .hero p,
 .contact p,
 .services-hero p,
-.faq-hero p,
 .resources-hero p,
 .about-hero p {
   color: #ffffff;
 }
 
-/* Shared helper if needed later */
+/* Shared helper for the dotless ı */
 .idot {
   position: relative;
   display: inline-block;
   line-height: 1;
 }
 
-/* Purple i-dot styling (logo + wordmark) */
+/* Base purple i-dot styling (logo + wordmark) */
 .idot::after {
   content: '';
   position: absolute;
@@ -117,7 +111,6 @@ a {
     0 2px 6px rgba(0,0,0,0.25),
     0 0 0 1px rgba(148,144,255,0.12);
 }
-
 
 /* =========================================================
    3) SHARED HEADER / FOOTER / BUTTONS
@@ -146,17 +139,17 @@ a {
 .header-wordmark {
   display: flex;
   flex-direction: column;
-  text-decoration: none;
   align-items: flex-end;
+  text-decoration: none;
 }
 
 .header-word {
   font-family: 'Poppins', sans-serif;
   font-weight: 700;
   font-size: 1.3rem;
-  color: #fff;               /* inner pages header sits on gradient */
+  color: #fff;               /* sits on gradient on inner pages */
   letter-spacing: 0.08em;
-  /* DO NOT uppercase — it breaks the dotless ı */
+  /* do not uppercase — it breaks the dotless ı */
 }
 
 .header-tagline {
@@ -168,11 +161,7 @@ a {
   color: rgba(255,255,255,0.9);
 }
 
-/* =========================================================
-   Purple dot above the dotless Turkish ı in the header wordmark
-   (used on ALL inner pages)
-   ========================================================= */
-
+/* Purple dot above the dotless Turkish ı in the header wordmark */
 .header-word .idot {
   position: relative;
   color: #ffffff;      /* keep the ı visible */
@@ -194,81 +183,51 @@ a {
     0 0 0 1px rgba(140,120,255,0.22);
 }
 
-/* --- Login icon (optional, used on Founder page) --- */
-.header-right {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 1.2rem;
-}
-
-.login-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.1);
-  opacity: 0.55;
-  border: none;
-  transition: opacity .25s ease, background .25s ease, transform .25s ease;
-}
-
-.login-icon:hover {
-  opacity: 1;
-  background: rgba(255,255,255,0.25);
-  transform: scale(1.08);
-}
-
-.login-icon svg {
-  width: 22px;
-  height: 22px;
-  stroke: #fff;
-}
-
 /* =========================================================
    FOOTER
    ========================================================= */
 
-footer,
-.simple-footer,
-.secondary-footer {
+.simple-footer {
+  padding: 1.6rem 10% 1.8rem;
   background: #000;
-  color: #fff;
+  color: rgba(255,255,255,0.9);
   text-align: center;
-  padding: 1.2rem 1rem; /* slightly reduced from earlier */
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.98rem;
+  border-top: 1px solid rgba(255,255,255,0.15); /* ✦ NEW subtle line */
+}
+
+.footer-nav {
+  margin-bottom: 1.6rem;   /* was 1.2, gives more breathing room */
+}
+
+.simple-footer p {
+  margin-top: 1.1rem;      /* ensures separation from nav */
+  opacity: 0.8;
   font-size: 0.9rem;
 }
 
-footer nav,
-.simple-footer nav,
-.secondary-footer-nav {
-  display: flex;
-  justify-content: center;
-  gap: 0.9rem 1.6rem;
-  margin-bottom: 0.75rem;     /* increased spacing between nav + copyright */
-}
-
-footer a,
-.simple-footer a,
-.secondary-footer-nav .footer-link {
+.footer-nav a {
   color: #ffffff;
   text-decoration: none;
   opacity: 0.95;
 }
 
-footer a:hover,
-.simple-footer a:hover,
-.secondary-footer-nav .footer-link:hover {
+.footer-nav a:hover {
   opacity: 1;
 }
 
-.secondary-footer-copy {
-  margin-top: 0.5rem;
+.simple-footer p {
+  margin: 0;
+  opacity: 0.8;
+  font-size: 0.9rem;
 }
 
-/* --- Pill buttons (PDF, small CTAs) --- */
+/* =========================================================
+   SHARED BUTTON / PILL STYLES
+   ========================================================= */
+
+/* Pill-style link (used for PDF buttons, etc.) */
 .faq-pill-link {
   display: inline-block;
   padding: 0.6rem 1.6rem;
@@ -279,7 +238,110 @@ footer a:hover,
   font-size: 0.9rem;
   text-decoration: none;
   transition: all 0.25s ease;
-  margin: 0.4rem auto 0;
+  margin-top: 0.4rem;
+}
+
+.faq-pill-link:hover {
+  background: #fff;
+  color: var(--aux-teal);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+}
+
+/* About-page pill variant (same visual family) */
+.about-pill {
+  display: inline-block;
+  padding: 0.55rem 1.4rem;
+  border-radius: 40px;
+  background: var(--aux-teal);
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: all 0.25s ease;
+}
+
+.about-pill:hover {
+  background: #fff;
+  color: var(--aux-teal);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+}
+
+/* Contact button (used on index + resources) */
+.contact-button {
+  background: #fff;
+  color: var(--aux-teal);
+  padding: 0.8rem 2rem;
+  border-radius: 40px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s;
+  display: inline-block;
+}
+
+.contact-button:hover {
+  background: var(--aux-teal);
+  color: #fff;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.14);
+}
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.simple-footer {
+  padding: 1.6rem 10% 1.8rem;
+  background: #000;
+  color: rgba(255,255,255,0.9);
+  text-align: center;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.98rem;
+}
+
+.footer-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.footer-nav {
+  display: flex;
+  justify-content: center;
+  gap: 0.9rem 1.6rem;
+  margin-bottom: 1.2rem;
+  flex-wrap: wrap;
+}
+
+.footer-nav a {
+  color: #ffffff;
+  text-decoration: none;
+  opacity: 0.95;
+}
+
+.footer-nav a:hover {
+  opacity: 1;
+}
+
+.simple-footer p {
+  margin: 0;
+  opacity: 0.8;
+  font-size: 0.9rem;
+}
+
+
+/* =========================================================
+   PILL BUTTONS (PDF, SMALL CTAs)
+   ========================================================= */
+
+.faq-pill-link {
+  display: inline-block;
+  padding: 0.6rem 1.6rem;
+  border-radius: 999px;
+  background: var(--aux-teal);
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: all 0.25s ease;
+  margin-top: 0.4rem;
 }
 
 .faq-pill-link:hover {
@@ -313,8 +375,8 @@ footer a:hover,
 /* Wordmark block to keep hero title + tagline aligned */
 .wordmark-block {
   display: inline-block;
-  width: 24ch;
   text-align: center;
+  /* no fixed width – let it breathe on desktop */
 }
 
 /* --- Hero section --- */
@@ -404,19 +466,17 @@ footer a:hover,
 
 /* --- About section (home) --- */
 .about {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  gap: 3rem;
-  /* slightly less vertical padding to shorten the grey band */
   padding: 4.5rem 10% 3.5rem;
   background: var(--aux-bg-light);
 }
 
-/* keep the text column a bit narrower so it doesn’t feel so “long” */
+.about-inner {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
 .about .text {
-  width: 50%;
-  max-width: 34rem;
+  width: 100%;
 }
 
 .about h2 {
@@ -432,175 +492,20 @@ footer a:hover,
   color: #333;
 }
 
-/* Core promise sentence (purple emphasis) */
-.core-promise {
-  margin-top: 1.6rem;
-  color: var(--aux-purple);
-  font-weight: 700;
+.hero-lead {
+  font-weight: 600;
+  font-size: 1.25rem;
+  margin-bottom: 1.2rem;
+  color: rgba(255,255,255,0.95);
+}
+
+.about .hero-lead {
+  font-weight: 600;
   font-size: 1.08rem;
-}
-
-/* Globe mark on home – right-hand visual */
-.about-art {
-  position: relative;
-  width: clamp(180px, 24vw, 230px);
-  height: clamp(180px, 24vw, 230px);
-  flex: 0 0 auto;
-}
-
-.mark {
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  background: linear-gradient(
-    135deg,
-    var(--aux-grad-3) 15%,
-    var(--aux-grad-4) 45%,
-    var(--aux-grad-5) 100%
-  );
-  background-size: 180% 180%;
-  box-shadow:
-    0 10px 24px rgba(0,0,0,0.08),
-    inset 0 0 24px rgba(255,255,255,0.12);
-  overflow: hidden;
-  transition: filter .25s ease, transform .25s ease;
-}
-
-/* Subtle spin on hover */
-.about-art:hover .mark {
-  animation: tiltSpin 22s linear infinite;
-  filter: brightness(1.04) saturate(1.03);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .about-art:hover .mark {
-    animation: none;
-    transform: none;
-    filter: brightness(1.02) saturate(1.02);
-  }
-}
-
-@keyframes tiltSpin {
-  0%   { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-.mark::before {
-  content: '';
-  position: absolute;
-  inset: -10%;
-  background: radial-gradient(
-    100% 60% at 30% 20%,
-    rgba(255,255,255,0.16),
-    transparent 60%
-  );
-}
-
-/* vertical bands */
-.band {
-  position: absolute;
-  height: 120%;
-  top: -10%;
-  border-radius: 12px;
-  filter: blur(0.2px);
-}
-
-.band-a {
-  width: 22%;
-  left: 17%;
-  transform: rotate(-31deg);
-  background: linear-gradient(180deg, #9c95f2, transparent);
-}
-
-.band-b {
-  width: 16%;
-  left: 28%;
-  transform: rotate(-22deg);
-  background: linear-gradient(180deg, rgba(95,212,209,0.35), transparent);
-}
-
-/* Wordmark inside globe */
-.mark-wordblock {
-  position: absolute;
-  top: 50%;
-  right: 12%;
-  transform: translateY(-50%);
-  width: 14ch;
-  text-align: center;
-}
-
-.mark-word {
-  font-family: 'Poppins', sans-serif;
-  font-weight: 700;
-  font-size: clamp(1.9rem, 3.4vw, 2.4rem);
-  color: #fff;
-  text-shadow: 0 2px 6px rgba(0,0,0,0.18);
-}
-
-/* Purple dot gently moves on globe */
-.about-art .mark-word .idot::after {
-  top: -0.35em;
-  animation: idotBreathGlobe 5.2s ease-in-out infinite;
-}
-
-@keyframes idotBreathGlobe {
-  0%, 100% { transform: translate(-50%, 0); }
-  50%      { transform: translate(-50%, -4px); }
-}
-
-.about-art .mark-tagline {
-  margin-top: 0.25rem;
-  font-family: 'Poppins', sans-serif;
-  font-size: 0.72rem;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.92);
-  white-space: nowrap;
-}
-
-/* People turn to Auxlia section */
-.situations {
-  background: #ffffff;
-  padding: 3rem 10% 1.4rem;
-}
-
-.situations-inner {
-  max-width: 760px;
-  margin: 0 auto;
-  text-align: center;
-}
-
-.situations h2 {
-  font-family: 'Poppins', sans-serif;
-  color: var(--aux-teal);
-  font-size: 1.7rem;
-  margin-bottom: 1.1rem;
-}
-
-.situations ul {
-  list-style: disc;
-  margin: 0 auto;
-  padding-left: 1.4rem;
-  line-height: 1.7;
-  color: #444;
-  font-size: 0.98rem;
-  text-align: left;
-  max-width: 520px;
-}
-
-/* Soft gradient divider */
-.soft-divider {
-  border: none;
-  height: 3px;
-  width: 48%;
-  margin: 2.2rem auto 2.4rem;
-  border-radius: 999px;
-  background: linear-gradient(
-    90deg,
-    var(--aux-teal),
-    var(--aux-teal)
-  );
-  box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+  line-height: 1.6;
+  color: #222;
+  margin-top: 0.8rem;
+  margin-bottom: 0.9rem;
 }
 
 /* What we offer section */
@@ -617,8 +522,8 @@ footer a:hover,
   font-family: 'Poppins', sans-serif;
 }
 
-.services > p {
-  margin-bottom: 1.8rem;
+.services-inner > p {
+  margin-bottom: 2rem;   /* adjust 2.6–3.2rem to taste */
   font-size: 0.98rem;
   color: #555;
 }
@@ -626,14 +531,14 @@ footer a:hover,
 /* Cards */
 .cards {
   display: flex;
-  flex-wrap: nowrap;          /* prevent vertical stacking */
+  flex-wrap: wrap;
   justify-content: center;
   gap: 2rem;
   margin-bottom: 2.5rem;
 }
 
 .card {
-  background: #e3ecef;   /* the original calm grey */;;               /* <— override if it was var(--aux-bg-light) */
+  background: #e3ecef;        /* calm grey */
   padding: 2rem;
   border-radius: 12px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.05);
@@ -674,7 +579,7 @@ footer a:hover,
 /* --- Contact block on index --- */
 .contact {
   text-align: center;
-  padding: 5rem 10%;
+  padding: 3.0rem 10% 2.6rem;   /* was 5rem 10% */
   background: linear-gradient(
     135deg,
     var(--aux-grad-1),
@@ -694,128 +599,69 @@ footer a:hover,
   margin-bottom: 2rem;
 }
 
-.contact-button {
-  background: #fff;
-  color: var(--aux-teal);
-  padding: 0.8rem 2rem;
-  border-radius: 40px;
-  font-weight: 600;
-  text-decoration: none;
-  transition: all 0.3s;
-}
-
-.contact-button:hover {
-  background: var(--aux-teal);
-  color: #fff;
-}
-
-/* --- Keeps cards in a row --- */
+/* Desktop: keep cards in a row */
 @media (min-width: 900px) {
-  .cards,
-  .process-steps,
-  .resource-cards {
+  .cards {
     flex-wrap: nowrap;
   }
+}
 
-  .card,
-  .process-step,
-  .resource-card {
-    max-width: 260px;
-    width: 100%;
+/* Mobile tweaks for home about */
+@media (max-width: 768px) {
+  .about {
+    padding: 3.2rem 8% 3rem;
+  }
+
+  .about h2 {
+    font-size: 1.6rem;
+    line-height: 1.2;
+    text-align: center;
+  }
+
+  .about-inner {
+    max-width: 100%;
+  }
+
+  .about p,
+  .core-promise {
+    text-align: left;
   }
 }
-
-
-/* --- Footer (dot-separated links) --- */
-.simple-footer {
-  padding: 1.6rem 10% 1.8rem; 
-  background: #000;
-  text-align: center;
-  font-family: 'Poppins', sans-serif;
-  color: rgba(255,255,255,0.9);
-  font-size: 1.05rem;
-}
-
-.simple-footer .footer-links {
-  margin-bottom: 3rem !important; /* forced, large gap before copyright */
-  letter-spacing: 0.02em;
-}
-
-.simple-footer .footer-copy {
-  margin-top: 1.4rem !important; /* extra fallback spacing */
-  opacity: 0.8;
-}
-
-/* COPYRIGHT */
-.simple-footer .footer-copy {
-  margin: 0;
-  opacity: 0.75;
-  font-size: 0.95rem;
-}
-
 
 /* =========================================================
    5) INNER PAGES – SHARED BACKGROUND LOGIC
-   (services, faq, resources, about, founder)
+   (services, resources, about)
    ========================================================= */
 
-/* Inner pages: header sits directly on the gradient, no white bar */
-.services-page .site-header,
-.about-page .site-header,
-.resources-page .site-header,
-.founder-page .site-header {
-  background: transparent;
-  border-bottom: none;
+/* Universal inner-page intro line */
+.page-intro {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #333;
+  text-align: center;
+  margin: 0 auto 1.6rem;
+  max-width: 900px;
 }
 
-/* ============================================
-   Gradient logo for inner pages
-=============================================== */
-.gradient-logo img {
-  height: 48px;
-  width: auto;
-  display: block;
-}
-
-.services-page .header-wordmark.gradient-logo,
-.about-page .header-wordmark.gradient-logo,
-.resources-page .header-wordmark.gradient-logo,
-.founder-page .header-wordmark.gradient-logo,
-.faq-page .header-wordmark.gradient-logo {
-  display: flex;
-  align-items: center;
-}
-
-.faq-page,
+/* All inner pages sit on a calm light-grey background */
+.services-page,
 .resources-page,
 .about-page {
   position: relative;
   min-height: 100vh;
-  background: linear-gradient(
-    135deg,
-    var(--aux-grad-1) 0%,
-    var(--aux-grad-2) 24%,
-    var(--aux-grad-3) 52%,
-    var(--aux-grad-4) 78%,
-    var(--aux-grad-5) 100%
-  );
+  background: var(--aux-bg-light);
 }
 
-.header-word .idot,
-.mark-word .idot {
-  font-family: 'Poppins', sans-serif;
-  font-weight: 700;
+/* Header on inner pages: no bar, floating over hero */
+.services-page .site-header,
+.resources-page .site-header,
+.about-page .site-header {
+  background: transparent;
+  border-bottom: none;
 }
 
-/* ============================================
-   Gradient text wordmark for inner pages
-=============================================== */
-
-.services-page .gradient-text-logo .header-word,
-.about-page .gradient-text-logo .header-word,
-.resources-page .gradient-text-logo .header-word,
-.founder-page .gradient-text-logo .header-word,
-.faq-page .gradient-text-logo .header-word {
+/* Optional: gradient text logo variant if you ever use it */
+.gradient-text-logo .header-word {
   background: linear-gradient(
     135deg,
     var(--aux-grad-1) 0%,
@@ -830,58 +676,26 @@ footer a:hover,
   color: transparent;
 }
 
-/* Tagline stays simple + readable */
 .gradient-text-logo .header-tagline {
   color: rgba(255,255,255,0.85);
 }
 
-
-/* White veil overlay for subtle softness */
-.services-page::before,
-.faq-page::before,
-.resources-page::before,
-.about-page::before,
-.founder-page::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(255,255,255,0.22);
-  pointer-events: none;
-}
-
-/* Keep main content above veil */
-.services-page main,
-.faq-page main,
-.resources-page main,
-.about-page main,
-.founder-page main {
-  position: relative;
-  z-index: 1;
-}
-
-/* Ensure overlay does NOT cover the footer */
-.services-page::before,
-.faq-page::before,
-.resources-page::before,
-.about-page::before,
-.founder-page::before {
-  bottom: 150px;
-}
-
-/* Make sure the Turkish ı stays visible inside the gradient header */
+/* Make sure the Turkish ı stays visible if gradient-text-logo is used */
 .gradient-text-logo .header-word .idot {
-  -webkit-text-fill-color: #ffffff !important; /* show the glyph */
+  -webkit-text-fill-color: #ffffff !important;
   color: #ffffff;
 }
-
-
 
 /* =========================================================
    6) SERVICES PAGE
    ========================================================= */
 
-/* HERO – mirror home hero: gradient background, centered white text */
-/* HERO – same gradient as home, slightly tighter */
+/* Page background */
+.services-page {
+  background: var(--aux-bg-light);
+}
+
+/* HERO – gradient band at top */
 .services-hero {
   background: linear-gradient(
     135deg,
@@ -893,259 +707,190 @@ footer a:hover,
   );
   color: #ffffff;
   text-align: center;
-  padding: 5rem 10% 3.2rem;  /* tighter top + bottom */
+  padding: 5rem 10% 3rem;
 }
-
 
 .services-hero h1 {
   font-family: 'Poppins', sans-serif;
   font-size: 2.4rem;
   color: #ffffff;
-  margin-bottom: 0.8rem;
 }
 
-.services-intro-bottom {
-  color: rgba(255, 255, 255, 0.95) !important;
-  font-size: 1rem;
-  max-width: 36rem;
-  margin: 0 auto;
-  line-height: 1.6;
-}
-
-/* ===============================
-   PERFECT PURPLE DOT (header)
-   =============================== */
-.header-word .idot::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  transform: translateX(-63%);  /* slight left correction (~1px) */
-  top: -0.44em;                 /* tiny downward nudge */
-  width: 0.42em;                /* made slightly smaller so it looks rounder */
-  height: 0.42em;
-  border-radius: 50%;           /* ensures perfect circle */
-  background: var(--aux-purple);
-  box-shadow:
-    0 2px 4px rgba(0,0,0,0.18),
-    0 0 0 1px rgba(140,120,255,0.18);
-}
-
-
-/* Tier cards section – soft grey background */
-.services-tiers {
-  background: var(--aux-bg-light);
-  padding: 3rem 10% 3.5rem;
-  display: flex;
-  justify-content: center;
-  align-items: stretch;
-  gap: 2rem;
-  flex-wrap: wrap;
-}
-
-/* Individual tier card – white on grey section */
-.service-card {
-  background: #ffffff;
-  padding: 1.8rem 1.6rem;
-  border-radius: 14px;
-  width: 245px;
+/* Intro line under hero */
+.services-intro {
+  padding: 1.2rem 10% .6rem;
   text-align: center;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.services-intro-inner {
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.services-intro .intro {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  font-weight: 600;
+  color: #333;
+  white-space: nowrap;      /* keep on one line on desktop */
+}
+
+@media (max-width: 800px) {
+  .services-intro .intro {
+    white-space: normal;    /* allow wrapping on smaller screens */
+  }
+}
+
+/* Shared section container */
+.services-section {
+  padding: 0 10% 1.8rem;
+}
+
+.services-section-inner {
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+/* Tiers row */
+.tiers-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.8rem;
+}
+
+/* Base card style (tiers + info) */
+.tier-card,
+.info-card {
+  background: #ffffff;
+  border-radius: 18px;
+  box-shadow: 0 10px 24px rgba(0,0,0,0.08);
   border: 1px solid rgba(255,255,255,0.9);
   transition: transform .3s ease, box-shadow .3s ease;
-  display: flex;
-  flex-direction: column;
 }
 
-
-.service-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+/* Tier cards – wider so headings don’t wrap */
+.tier-card {
+  padding: 1.6rem 1.9rem 1.9rem;
+  flex: 0 1 360px;          /* target width ~360px */
+  max-width: 360px;
 }
 
-.service-card h3 {
+.tier-card h2 {
   font-family: 'Poppins', sans-serif;
+  font-size: 1.1rem;
   color: var(--aux-teal);
-  margin-bottom: 0.8rem;
+  margin-bottom: 0.25rem;
 }
 
-/* Main descriptive line (kept concise) */
-.tier-copy {
-  line-height: 1.5;
-  color: #333;
+.tier-subtitle {
   font-size: 0.95rem;
-  margin-bottom: 0.9rem;
-  min-height: 3.0em;
+  margin-bottom: 0.6rem;
+  color: #555;
 }
 
-/* Price line – pushed toward the lower third of card */
-.tier-price {
-  margin-top: auto;
-  font-weight: 600;
-  color: var(--aux-teal);
-  margin-bottom: 0.35rem;
+.tier-list {
+  padding-left: 1.2rem;
+  margin: 0.4rem 0 0.7rem;
 }
 
-.tier-approx {
-  font-weight: 400;
-  color: #777;
+.tier-list li {
+  margin-bottom: 0.25rem;
 }
 
-/* Short line under price */
-.tier-note {
-  margin-top: 0;
+.tier-examples {
   font-size: 0.9rem;
   color: #555;
+  margin-top: 0.4rem;
 }
 
-.services-help,
-.retainer-section {
-  background: #ffffff;
+/* Info cards – narrower, single-column */
+.info-card {
+  padding: 1.6rem 1.9rem 1.9rem;
+  max-width: 760px;
+  margin: 0 auto 0.5rem;
 }
 
-.services-help-card,
-.retainer-card {
-  background: var(--aux-bg-light);  /* both white */
-  border-radius: 16px;
-  max-width: 840px;     /* visually matches 3×245 row above */
-  width: 100%;
-  margin: 0 auto;
-  box-shadow: 0 8px 18px rgba(0,0,0,0.06);
-  border: 1px solid rgba(255,255,255,0.9);
-  padding: 1.6rem 2rem 1.8rem;
-  text-align: center;
-}
-
-
-
-/* "What we can help with" card under tiers */
-.services-help {
-  background: #ffffff;
-  padding: 3rem 10% 4rem;
-  display: flex;
-  justify-content: center;
-}
-
-
-
-/* Center only the title */
-.services-help-card h2 {
-  text-align: center;
-}
-
-/* Center the subtitle paragraph */
-.services-help-card p {
-  text-align: center;
-}
-
-/* Left-align only the bullet list */
-.services-help-card ul {
-  text-align: left;
-  margin: 0 auto;
-  display: inline-block;
-  padding-left: 1.2rem;
-}
-/* Keep the *block* centered nicely */
-.services-help-card ul {
-  margin: 0 auto;
-  display: inline-block;
-  padding-left: 1.2rem;
-}
-
-.services-help-card h2 {
+.info-card h2 {
   font-family: 'Poppins', sans-serif;
-  font-size: 1.4rem;
+  font-size: 1.05rem;
   color: var(--aux-teal);
-  margin-bottom: 0.8rem;
-  white-space: nowrap;
+  margin-bottom: 0.4rem;
 }
 
-.services-help-card p {
+.info-card p {
   font-size: 0.96rem;
   line-height: 1.6;
   color: #333;
-  margin-bottom: 0.8rem;
 }
 
-.services-help-card ul {
-  padding-left: 1.2rem;
+/* Shared hover for all cards */
+.tier-card:hover,
+.info-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 24px rgba(0,0,0,0.12);
 }
 
-.services-help-card li {
-  margin-bottom: 0.35rem;
+/* PDF card alignment */
+.services-pdf .info-card {
+  text-align: center;
 }
 
-/* RETAINER CARD */
-.retainer-section {
-  padding: 0 10% 4.5rem;
-  display: flex;
-  justify-content: center;
-}
-
-.retainer-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
-}
-
-.retainer-card h3 {
-  color: var(--aux-teal);
-  font-family: 'Poppins', sans-serif;
-  margin-bottom: 1rem;
-}
-
-.retainer-text {
-  line-height: 1.6;
-  color: #333;
-  font-size: 0.96rem;
-  margin-bottom: 0.9rem;
-}
-
-/* Centered PDF button */
-.retainer-cta {
+.services-pdf .pdf-button {
+  display: inline-block;
   margin-top: 0.8rem;
-  text-align: center;
+  background: var(--aux-teal);
+  color: #ffffff;
+  padding: 0.8rem 2rem;
+  border-radius: 40px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.25s ease;
 }
 
-.retainer-footnote {
-  margin-top: 0.75rem;
-  font-size: 0.82rem;
-  color: #555;
+.services-pdf .pdf-button:hover {
+  background: #ffffff;
+  color: var(--aux-teal);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
 }
+
+/* Contact band at bottom keeps existing .contact styles */
+
 
 /* Small screen tweaks */
 @media (max-width: 768px) {
   .services-hero {
-    padding: 3.5rem 8% 2.5rem;
+    padding: 4.2rem 8% 2.4rem;
   }
 
-  .services-tiers {
-    padding: 2rem 8% 3rem;
+  .services-hero h1 {
+    font-size: 2rem;
   }
-}
 
+  .services-section {
+    padding: 0 8% 2rem;
+  }
 
-/* ============================================
-   UNIVERSAL CARD HOVER for Services page
-   Applies to: tier cards, help card, retainer card
-=============================================== */
-
-.service-card,
-.services-help-card,
-.retainer-card {
-  transition: transform .3s ease, box-shadow .3s ease;
-}
-
-.service-card:hover,
-.services-help-card:hover,
-.retainer-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+  .tier-card,
+  .info-card {
+    max-width: 100%;
+  }
 }
 
 /* =========================================================
    7) RESOURCES PAGE
    ========================================================= */
 
-/* Hero – mirror services/about hero */
+/* Page background in light grey, like Services/About */
+.resources-page {
+  background: var(--aux-bg-light);
+}
+
+.resources-page::before {
+  content: none;
+}
+
+/* HERO – gradient band at top */
 .resources-hero {
   background: linear-gradient(
     135deg,
@@ -1157,175 +902,145 @@ footer a:hover,
   );
   color: #ffffff;
   text-align: center;
-  padding: 5rem 10% 3.2rem;
-  max-width: 100%;
-  margin: 0 auto;
+  padding: 5rem 10% 3rem;
 }
 
 .resources-hero h1 {
   font-family: 'Poppins', sans-serif;
   font-size: 2.4rem;
-  margin-bottom: 0.8rem;
+  margin: 0;
 }
 
-.resources-hero p {
-  font-size: 1rem;
-  line-height: 1.6;
-  max-width: 36rem;
+
+/* INTRO UNDER HERO */
+.resources-intro-section {
+  padding: 1.8rem 10% 2.2rem;
+}
+
+.resources-intro-inner {
+  max-width: 780px;
   margin: 0 auto;
-  color: rgba(255,255,255,0.95);
+  text-align: center;
 }
 
-/* Main card stack */
+.resources-intro {
+  font-size: 1.05rem;      /* slightly bigger, like Services intro */
+  line-height: 1.7;
+  color: #333;
+  font-weight: 600;        /* <-- makes it bold */
+  text-align: center;      /* keep centered */
+}
+
+/* MAIN WRAPPER */
 .resources-main {
-  padding: 2rem 10% 4.5rem;
-  max-width: 1100px;   /* was 900px */
+  padding: 0 10% 3.6rem;
+  max-width: 1100px;
   margin: 0 auto;
+}
+
+/* GROUPS (Before / During) */
+.resource-group {
+  margin-bottom: 2.6rem;
+}
+
+.resource-group h2 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.4rem;
+  color: var(--aux-teal);
+  text-align: center;
+  margin-bottom: 0.9rem;
+}
+
+/* ROW OF CARDS */
+.resource-row {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 1.6rem;
 }
 
-.resources-card {
+/* CARD */
+.resource-card {
   background: #ffffff;
+  padding: 1.6rem 1.8rem 1.9rem;
   border-radius: 14px;
-  width: 100%;
-  padding: 2rem 2rem 2.2rem;
-  box-shadow: 0 10px 24px rgba(0,0,0,0.08);
+  max-width: 780px;              /* single card width */
+  box-shadow: 0 8px 18px rgba(0,0,0,0.08);
   border: 1px solid rgba(255,255,255,0.9);
   transition: transform .3s ease, box-shadow .3s ease;
 }
 
-.resources-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+/* Narrower cards for the two-column “During” section */
+.resource-card-half {
+  flex: 1 1 320px;
+  max-width: 480px;
 }
 
-.resources-card h2 {
+.resource-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 22px rgba(0,0,0,0.12);
+}
+
+/* Headings inside the two smaller cards */
+.resource-card h3 {
   font-family: 'Poppins', sans-serif;
-  font-size: 1.3rem;
+  font-size: 1.05rem;
   color: var(--aux-teal);
   margin-bottom: 0.6rem;
 }
 
-.resources-card p {
-  line-height: 1.65;
+/* LISTS */
+.resource-list {
+  list-style: disc;
+  padding-left: 1.3rem;
+  margin-top: 0.4rem;
+}
+
+.resource-list li {
+  margin-bottom: 0.35rem;
+  line-height: 1.7;
   color: #333;
-  margin-bottom: 0.9rem;
+  font-size: 0.98rem;
 }
 
-.resources-list {
-  padding-left: 1.2rem;
-  margin-bottom: 1rem;
-}
-
-.resources-list li {
-  margin-bottom: 0.3rem;
-}
-
-/* Breathing exercise block */
-.breathing-block {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-  margin-top: 1rem;
-  flex-wrap: wrap;
-  justify-content: center;    /* center the circle + text on wider screens */
-}
-
-/* Animated breathing circle */
-.breathing-circle {
-  width: 110px;
-  height: 110px;
-  border-radius: 50%;
-  background: radial-gradient(circle at 30% 20%, rgba(255,255,255,0.8), var(--aux-teal));
-  box-shadow: 0 8px 20px rgba(0,0,0,0.18);
-  animation: auxliaBreath 7s ease-in-out infinite;
-}
-
-/* Text next to circle */
-.breathing-instructions {
-  flex: 1 1 220px;
-  font-size: 0.95rem;
-  color: #333;
-}
-
-.breathing-instructions p {
-  margin-bottom: 0.4rem;
-}
-
-@keyframes auxliaBreath {
-  0%   { transform: scale(0.9); opacity: 0.9; }
-  25%  { transform: scale(1.05); opacity: 1;   }
-  50%  { transform: scale(1.15); opacity: 1;   }
-  75%  { transform: scale(1.05); opacity: 1;   }
-  100% { transform: scale(0.9); opacity: 0.9; }
-}
-
-/* Gentle visual focus game */
-.focus-block {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  margin-top: 1rem;
-}
-
-.focus-track {
-  position: relative;
-  height: 2.8rem;
-  border-radius: 999px;
-  overflow: hidden;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  background: rgba(255, 255, 255, 0.7);
-}
-
-.focus-dot {
-  position: absolute;
-  top: 50%;
-  width: 1.2rem;
-  height: 1.2rem;
-  border-radius: 999px;
-  transform: translate(-50%, -50%);
-  background: var(--aux-teal);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
-  animation: focus-slide 6s ease-in-out infinite alternate;
-}
-
-@keyframes focus-slide {
-  from {
-    left: 10%;
-  }
-  to {
-    left: 90%;
-  }
-}
-
-.focus-prompts p {
-  margin-bottom: 0.3rem;
-}
-
-/* Resources page: calm light-grey background, no gradient veil */
-.resources-page {
-  background: var(--aux-bg-light);
-}
-
-.resources-page::before {
-  content: none;
-}
-
+/* MOBILE */
 @media (max-width: 768px) {
   .resources-hero {
-    padding: 4.6rem 8% 2rem;
+    padding: 4.4rem 8% 2rem;
+  }
+
+  .resources-intro-section {
+    padding: 1.8rem 8% 2rem;
+  }
+
+  .resources-main {
+    padding: 0 8% 3.2rem;
+  }
+
+  .resource-row {
+    flex-direction: column;
+  }
+
+  .resource-card,
+  .resource-card-half {
+    max-width: 100%;
   }
 }
-
-
 
 /* =========================================================
    8) ABOUT PAGE
    ========================================================= */
 
-/* Hero – visually matches services hero */
+/* Page background */
+.about-page {
+  background: var(--aux-bg-light);
+}
+
+.about-page::before {
+  content: none;
+}
+
+/* HERO – just the band + title */
 .about-hero {
   background: linear-gradient(
     135deg,
@@ -1335,106 +1050,66 @@ footer a:hover,
     var(--aux-grad-4) 78%,
     var(--aux-grad-5) 100%
   );
-  color: #ffffff;
+  color: #fff;
   text-align: center;
-  padding: 5rem 10% 3.2rem;
+  padding: 5rem 10% 3rem;
 }
 
 .about-hero h1 {
   font-family: 'Poppins', sans-serif;
   font-size: 2.4rem;
-  color: #ffffff;
-  margin-bottom: 0.8rem;
+  margin: 0;
 }
 
-/* Intro line – same styling as services-intro-bottom */
-.about-intro-bottom {
-  color: rgba(255, 255, 255, 0.95);
-  font-size: 1rem;
-  max-width: 36rem;
+/* INTRO UNDER HERO (bold-ish, like services intro) */
+.about-intro {
+  padding: 1.8rem 10% 2.2rem;
+}
+
+.about-intro-inner {
+  max-width: 780px;
   margin: 0 auto;
-  line-height: 1.6;
 }
 
+.about-intro-inner p {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  font-weight: 600;
+  text-align: center;
+  color: #333;
+}
+
+/* MAIN – TWO CARDS SIDE BY SIDE ON DESKTOP */
 .about-main {
-  padding: 2rem 10% 4.5rem;
+  padding: 0 10% 3.2rem;
   max-width: 1100px;
   margin: 0 auto;
-  display: grid;
-  gap: 1.5rem;
-}
-
-/* Desktop / tablet: 2 columns, but only for the first two cards */
-@media (min-width: 768px) {
-  .about-main {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  /* From the third card onward, span full width */
-  .about-main .about-card:nth-child(n + 3) {
-    grid-column: 1 / -1;
-  }
-}
-
-@media (min-width: 768px) {
-  /* From the third card onward: full-width in the grid,
-     but visually narrower + centered */
-  .about-main .about-card:nth-child(n + 3) {
-    max-width: 820px;      /* adjust to taste: 760–840 looks good */
-    justify-self: center;  /* centers within the grid */
-  }
-}
-
-
-.about-card {
-  background: #ffffff;
-  border-radius: 14px;
-  padding: 1.8rem 1.8rem 2rem;
-  box-shadow: 0 10px 24px rgba(0,0,0,0.08);
-}
-
-
-.about-card h2 {
-  font-family: 'Poppins', sans-serif;
-  font-size: 1.2rem;
-  color: var(--aux-teal);
-  margin-bottom: 0.6rem;
-}
-
-.about-card p {
-  line-height: 1.65;
-  color: #333;
-  margin-bottom: 0.8rem;
-}
-
-/* Founder pill at bottom of About card */
-.about-page .about-buttons {
-  margin-top: 1.2rem;
   display: flex;
-  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
 }
 
-/* Override for About page: light grey background like services sections */
-.about-page {
-  background: var(--aux-bg-light);
+/* Wrapper for each card + heading */
+.about-card-wrap {
+  flex: 1 1 320px;
+  max-width: 480px;        /* keeps them narrower */
 }
 
-/* About page: no white veil, just clean grey background */
-.about-page::before {
-  content: none;
+/* Headings OUTSIDE the cards, centered */
+.about-card-wrap h2 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.35rem;
+  color: var(--aux-teal);
+  text-align: center;
+  margin-bottom: 0.7rem;
 }
 
+/* Card itself (same visual as other inner-page cards, just a bit narrower) */
 .about-card {
   background: #ffffff;
   border-radius: 14px;
-  padding: 1.8rem 1.8rem 2rem;
-  box-shadow: 0 10px 24px rgba(0,0,0,0.08);
-}
-
-.about-card {
-  background: #ffffff;
-  border-radius: 14px;
-  padding: 1.8rem 1.8rem 2rem;
+  padding: 1.6rem 1.7rem 1.9rem;
   box-shadow: 0 8px 18px rgba(0,0,0,0.08);
   border: 1px solid rgba(255,255,255,0.9);
   transition: transform .3s ease, box-shadow .3s ease;
@@ -1442,224 +1117,129 @@ footer a:hover,
 
 .about-card:hover {
   transform: translateY(-6px);
-  box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+  box-shadow: 0 10px 22px rgba(0,0,0,0.12);
 }
 
-
-/* Who Auxlia helps list – slightly looser and aligned */
-.about-list {
-  padding-left: 1.2rem;
-  margin: 0.4rem 0 0.8rem;
-}
-
-.about-list li {
-  margin-bottom: 0.3rem;
-}
-
-/* How Auxlia works – nicer list layout */
-.about-steps {
-  list-style-position: outside;
-  padding-left: 1.4rem;
-  margin-top: 0.4rem;
-}
-
-.about-steps li {
-  margin-bottom: 0.85rem;
-}
-
-/* Step headings inline with the number */
-.about-steps h3 {
-  display: inline;
-  font-size: 1rem;
-  font-family: 'Poppins', sans-serif;
-  margin-right: 0.3rem;
-}
-
-/* Step text sits on same line then wraps nicely */
-.about-steps p {
-  display: inline;
-}
-
-.mini-faq-q {
-  font-family: 'Poppins', sans-serif;
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--aux-teal);
-  margin-top: 1.2rem;
-  margin-bottom: 0.3rem;
-}
-
-.about-card .mini-faq-q + p {
-  margin-top: 0.2rem;   /* small, neat gap */
-  margin-bottom: 0.8rem;
+/* Paragraphs + lists in cards */
+.about-card p {
   line-height: 1.6;
   color: #333;
+  margin-bottom: 0.8rem;
 }
 
-.about-card.short-answers {
-  padding-bottom: 2.2rem;
-}
-
-.short-answers .mini-faq-q {
-  margin-top: 1.4rem;
-}
-
-.short-answers p {
-  margin-bottom: 1rem;
-}
-
-/* Who Auxlia helps – give text more air */
-.about-main .about-card:nth-child(3) p,
-.about-main .about-card:nth-child(3) li {
-  font-size: 0.98rem;
-  line-height: 1.7;
-}
-
-/* List spacing inside this card */
 .about-list {
-  padding-left: 1.2rem;
-  margin: 0.5rem 0 1rem;
+  list-style: disc;
+  padding-left: 1.3rem;
+  margin: 0.4rem 0 1rem;
 }
 
 .about-list li {
   margin-bottom: 0.35rem;
-}
-
-.about-list .accent {
-  color: var(--aux-teal);
-  font-weight: 600;        /* optional — looks very clean */
-}
-
-.about-card p {
-  line-height: 1.58;  /* slightly tighter than 1.65 */
-  margin-bottom: 0.75rem;
-}
-
-.about-main .about-card:nth-child(1),
-.about-main .about-card:nth-child(2) {
-  max-width: 460px;     /* optional: keeps them visually tidy */
-}
-
-/* Narrow just the first two cards on desktop */
-@media (min-width: 768px) {
-  .about-main .about-card:nth-child(1),
-  .about-main .about-card:nth-child(2) {
-    max-width: 460px;
-    justify-self: center;
-  }
-}
-
-.about-main .about-card:nth-child(1) p,
-.about-main .about-card:nth-child(2) p {
-  line-height: 1.56;
-}
-
-.about-main .about-card:nth-child(1),
-.about-main .about-card:nth-child(2) {
-  padding-bottom: 2.2rem;
-}
-
-@media (min-width: 768px) {
-  /* Make the first two cards a bit narrower so they don't dominate */
-  .about-main .about-card:nth-child(1),
-  .about-main .about-card:nth-child(2) {
-    max-width: 390px;      /* tweak 420–460 to taste */
-    justify-self: center;  /* keeps each card centered in its column */
-  }
-}
-
-/* Number + step title in teal */
-.about-steps {
-  padding-left: 1.4rem;
-}
-
-.about-steps li::marker {
-  color: var(--aux-teal);
-  font-weight: 600;
-}
-
-.about-steps h3 {
-  display: inline;
-  font-family: 'Poppins', sans-serif;
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--aux-teal);
-  margin-right: 0.25rem;
-}
-
-/* Step text inline and neutral */
-.about-steps p {
-  display: inline;
+  line-height: 1.6;
   color: #333;
 }
 
-/* Center pill-style buttons that appear in About cards */
-.about-card .faq-pill-link {
-  display: block;
-  margin: 0.9rem auto 0;   /* centered horizontally */
+/* PDF SECTION – centered like Services PDF card */
+.about-pdf {
+  padding: 0 10% 3.6rem;
+}
+
+.about-pdf-inner {
+  max-width: 800px;
+  margin: 0 auto;
   text-align: center;
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 1.6rem 1.8rem 2rem;
+  box-shadow: 0 8px 18px rgba(0,0,0,0.08);
+  border: 1px solid rgba(255,255,255,0.9);
 }
 
-.about-steps li {
-  margin-bottom: 0.85rem;
+.about-pdf-inner p {
+  margin-bottom: 1rem;
 }
 
-.about-steps li::marker {
-  color: var(--aux-teal);
+.about-pdf-inner .pdf-button {
+  display: inline-block;
+  margin-top: 0.8rem;
+  background: var(--aux-teal);
+  color: #ffffff;
+  padding: 0.8rem 2rem;
+  border-radius: 40px;
   font-weight: 600;
+  text-decoration: none;
+  transition: all 0.25s ease;
 }
 
-.about-steps h3 {
-  display: inline;
-  font-family: 'Poppins', sans-serif;
-  font-size: 1rem;
-  font-weight: 600;
+.about-pdf-inner .pdf-button:hover {
+  background: #ffffff;
   color: var(--aux-teal);
-  margin-right: 0.25rem;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
 }
 
-.about-steps p {
-  display: inline;
-  color: #333;
-}
+/* Button already uses .contact-button shared style;
+   centering comes from text-align:center on the card */
 
-/* In Values & Boundaries card: center the pill and size it to content */
-.about-card .faq-pill-link {
-  display: block;
-  width: max-content;      /* shrink to content width */
-  margin: 1rem auto 0;     /* center horizontally */
-  padding: 0.6rem 1.6rem;  /* keep it pill-y but not huge */
-}
+/* MOBILE */
+@media (max-width: 768px) {
+  .about-hero {
+    padding: 4rem 8% 2rem;
+  }
 
-.about-card h2 {
-  margin-bottom: 0.6rem;   /* existing, applies to all cards */
-}
+  .about-hero h1 {
+    font-size: 2rem;
+  }
 
-/* Add this: increase spacing ONLY for the How Auxlia works card */
-.about-card:nth-child(4) h2 {
-  margin-bottom: 1.2rem;   /* adjust 1.0–1.4 to taste */
-}
+  .about-intro {
+    padding: 1.8rem 8% 2rem;
+  }
 
-/* First two cards: What Auxlia is + What Auxlia is not */
-.about-main .about-card:nth-child(1),
-.about-main .about-card:nth-child(2) {
-  padding-top: 1.4rem;
-  padding-bottom: 1.2rem;
+  .about-main {
+    padding: 0 8% 3rem;
+    flex-direction: column;
+  }
+
+  .about-card-wrap {
+    max-width: 100%;
+  }
+
+  .about-pdf {
+    padding: 0 8% 3.2rem;
+  }
 }
 
 /* =========================================================
-   9) GLOBAL RESPONSIVE TWEAKS
+   9) GLOBAL RESPONSIVE TWEAKS (CLEAN + CONSOLIDATED)
    ========================================================= */
 
-/* Hero title scaling */
+/* -------------------------------
+   HERO TITLES – responsive scale
+-------------------------------- */
 @media (max-width: 900px) {
-  .title { font-size: 3.2rem; }
+  .title {
+    font-size: 3.2rem;
+  }
 }
 
 @media (max-width: 768px) {
-  .title { font-size: 2.6rem; }
+  .title {
+    font-size: 2.6rem;
+  }
+}
 
-  /* Index about layout collapses to column */
+/* -------------------------------
+   HEADER – mobile padding
+-------------------------------- */
+@media (max-width: 768px) {
+  .site-header {
+    padding-inline: 1.4rem;
+  }
+}
+
+/* -------------------------------
+   HOME ABOUT SECTION (INDEX)
+-------------------------------- */
+@media (max-width: 768px) {
   .about {
     flex-direction: column;
     text-align: center;
@@ -1673,17 +1253,18 @@ footer a:hover,
     font-size: 1.6rem;
     line-height: 1.2;
   }
-
-  /* Header padding slightly narrower on mobile */
-  .site-header {
-    padding-inline: 1.4rem;
-  }
 }
 
-/* Services + FAQ + Resources + About + Founder mobile tweaks */
+/* =========================================================
+   INNER PAGE RESPONSIVE RULES
+   (Services, Resources, About, Founder)
+   ========================================================= */
+
 @media (max-width: 768px) {
 
-  /* SERVICES */
+  /* --------------------------
+     SERVICES PAGE
+  -------------------------- */
   .services-hero {
     padding: 4rem 8% 1.6rem;
   }
@@ -1714,40 +1295,20 @@ footer a:hover,
     width: 100%;
   }
 
-  /* FAQ */
-  .faq-hero {
-    padding: 4.4rem 8% 2.2rem;
-  }
-
-  .faq-title {
-    font-size: 2rem;
-  }
-
-  .faq-content {
-    padding: 2rem 8% 4rem;
-  }
-
-  /* RESOURCES */
+  /* --------------------------
+     RESOURCES PAGE
+  -------------------------- */
   .resources-hero {
     padding: 4.6rem 8% 2rem;
   }
 
-  .resources-main {
-    padding: 2rem 8% 4rem;
+  .resource-section {
+    padding: 2rem 8%;
   }
 
-  .breathing-block {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
-
-  .breathing-circle {
-    width: 160px;
-    height: 160px;
-  }
-
-  /* ABOUT */
+  /* --------------------------
+     ABOUT PAGE
+  -------------------------- */
   .about-hero {
     padding: 4.6rem 8% 2rem;
   }
@@ -1760,34 +1321,22 @@ footer a:hover,
     padding: 2.5rem 8% 3.5rem;
   }
 
-  /* FOUNDER */
-  .founder-main {
-    padding: 4.8rem 8% 3.5rem;
-  }
-
-  .founder-card {
-    padding: 2.1rem 1.6rem 2.3rem;
-  }
-
-  .founder-card h1 {
-    font-size: 1.8rem;
-  }
-}
-
-/* Accessibility: if user prefers reduced motion, kill animations */
+/* =========================================================
+   ACCESSIBILITY – reduced motion
+   ========================================================= */
 @media (prefers-reduced-motion: reduce) {
   .hero-content,
   .scroll-indicator,
   .idot::after,
-  .about-art .mark,
-  .about-art .mark::before,
   .breathing-circle {
     animation: none !important;
     transform: none !important;
   }
 }
 
+/* Base fade */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(12vh); }
   to   { opacity: 1; transform: translateY(8vh); }
+}
 }
