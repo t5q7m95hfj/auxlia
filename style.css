@@ -1368,7 +1368,7 @@ a {
 
   /* --- About: tighten gap between intro text + first "How Auxlia helps" --- */
   .about-section:first-of-type .intro {
-    margin-bottom: 1.2rem;  /* was 2rem */
+    margin-bottom: .8rem;  /* was 2rem */
   }
 }
 
@@ -1389,7 +1389,7 @@ a {
 
 @media (max-width: 768px) {
   .hero {
-    height: 86vh;               /* sweet spot */
+    height: 90vh;               /* sweet spot */
     max-height: 700px;          /* prevents ultra-tall devices from over-expanding */
     display: flex;
     align-items: center;
