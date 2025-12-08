@@ -609,7 +609,7 @@ a {
 /* Mobile tweaks for home about */
 @media (max-width: 768px) {
   .about {
-    padding: 3.2rem 8% 3rem;
+    padding: 3.2rem 8% 1.6rem;
   }
 
   .about h2 {
@@ -1191,7 +1191,7 @@ a {
   }
 
   .about-intro {
-    padding: 1.8rem 8% 2rem;
+    padding: 1.8rem 8% 1rem;
   }
 
   .about-main {
@@ -1366,12 +1366,6 @@ a {
     margin-top: 1.1rem;     /* pushes title slightly further from header */
   }
 
-  /* --- About: tighten gap between intro text + first "How Auxlia helps" --- */
-  .about-section:first-of-type .intro {
-    margin-bottom: .8rem;  /* was 2rem */
-  }
-}
-
 /* Footer nav: keep links on one line on small screens */
 @media (max-width: 480px) {
   .footer-nav {
@@ -1400,4 +1394,5 @@ a {
   .hero-content {
     transform: translateY(4vh); /* was 8vh — lifts the text closer to center */
   }
+}
 }
